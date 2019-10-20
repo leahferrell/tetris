@@ -1,0 +1,12 @@
+.result-window {
+    background-color: #212121;
+    color: #eeeeee;
+    top: 50%;
+    bottom: 50%;
+    margin: 10px 0;
+    padding: 5px;
+    width: 100px;
+    height: 57px;
+    line-height: 57px;
+    text-align: center;
+}
