@@ -1,12 +1,12 @@
 import {randomShape, rotateShape} from "../../util";
 import {
-  BOTH_COLLISIONS,
-  HORIZONTAL_COLLISION, MAX_Y,
+  HORIZONTAL_COLLISION,
+  MAX_Y,
+  NO_COLLISIONS,
   NONE,
   STARTING_COORD,
   STARTING_ROTATION,
   TICK_INCREMENT,
-  VERTICAL_COLLISION,
   X_IX,
   Y_IX
 } from "../../config";
@@ -16,12 +16,12 @@ import {HARD_DROPPED, MOVED_HORIZONTAL, ROTATED, SOFT_DROPPED, SWAPPED_HOLD} fro
 
 export const initialState = {
   hold: NONE,
-    next: randomShape(),
-    current: {
+  next: randomShape(),
+  current: {
     id: NONE,
-      location: STARTING_COORD,
-      shiftAmount: NONE,
-      rotation: STARTING_ROTATION
+    location: STARTING_COORD,
+    shiftAmount: NONE,
+    rotation: STARTING_ROTATION
   }
 };
 
@@ -60,18 +60,18 @@ const translate = (shape, xShift, yShift) => ({
   location: [shape.location[X_IX]+xShift, shape.location[Y_IX]+yShift]
 });
 
-const moved = (state, transformation) => {
+const moved = (state, gutter, transformation) => {
   if(state.current.id === NONE){
     return {state: next(state), action: {}};
   }
 
   let transformedShape = transformation(state.current);
 
-  let collisions = computeCollisions(transformedShape);
+  let collisions = computeCollisions(transformedShape, gutter);
 
   if(collisions === HORIZONTAL_COLLISION){
     return {state, action: {}};
-  }else if(collisions === VERTICAL_COLLISION || collisions === BOTH_COLLISIONS){
+  }else if(collisions !== NO_COLLISIONS){
     return {
       state: next(state),
       action: {
@@ -93,11 +93,11 @@ const moved = (state, transformation) => {
 const shapes = (state = initialState, action) => {
   switch (action.type) {
     case TICK_CYCLE: case SOFT_DROPPED:
-      return moved(state, (shape) => translate(shape, NONE, TICK_INCREMENT));
+      return moved(state, action.gutter, (shape) => translate(shape, NONE, TICK_INCREMENT));
     case SWAPPED_HOLD:
       return swap(state);
     case ROTATED:
-      return moved(state, (shape) => rotate(shape, action.payload));
+      return moved(state, action.gutter, (shape) => rotate(shape, action.payload));
     case HARD_DROPPED:
       return {
         state: next(state),
@@ -107,7 +107,7 @@ const shapes = (state = initialState, action) => {
         }
       };
     case MOVED_HORIZONTAL:
-      return moved(state, (shape) => translate(shape, action.payload, NONE));
+      return moved(state, action.gutter, (shape) => translate(shape, action.payload, NONE));
     default:
       return {state, action};
   }

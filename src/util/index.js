@@ -1,5 +1,17 @@
-import {COLORED_BLOCK, MAX_SHAPE, SHAPES, X_IX, Y_IX} from "../config";
-import {REMOVED_ROWS} from "../actions/game";
+import {
+  COLORED_BLOCK,
+  MAX_SHAPE,
+  MAX_X,
+  MAX_Y,
+  NO_COLLISIONS,
+  NONE,
+  NOT_COLORED_BLOCK,
+  SHAPES,
+  X_IX,
+  Y_IX
+} from "../config";
+import {HIT_TOP, REMOVED_ROWS} from "../actions/game";
+import {computeCollisionsForCoords, didHitTop} from "./collisions";
 
 export const computeShapeCoords = (shapeId, shapeLoc, shapeRotation, shiftAmount) => {
   let shiftedLoc = [shapeLoc[X_IX]+shiftAmount,shapeLoc[Y_IX]];
@@ -27,30 +39,53 @@ export const addShapeToGutter = (gutter, coordList, shapeId) => {
 };
 
 export const fitShapeToGutter = (gutter, shape) => {
-  //TODO: implement the following logic
-  // get correct coordinates
-  // add shape to gutter
-  // check for complete rows
-  //   if complete row:
-  //      increment row counter
-  //      remove complete row
-  //      add blank row at top
-  // return new gutter and action (update results, row count)
+  let coordinates = bestFitCoordinates(gutter, shape);
+  let gutterWithShape = addShapeToGutter(gutter, coordinates, shape.id);
+  let gutterWithoutFullRows = removeCompleteRows(gutterWithShape);
+  let removedRowsCount = MAX_Y - gutterWithoutFullRows.length;
 
-  let updatedGutter = gutter;
-  let removedRowsCount = 0;
+  if(removedRowsCount > NONE){
+    let extraRows = (Array.from(Array(removedRowsCount), _ => Array(MAX_X).fill(NONE)));
 
-  return {
-    state: updatedGutter,
-    action: {
-      type: REMOVED_ROWS,
-      payload: removedRowsCount
+    gutterWithoutFullRows.unshift(...extraRows);
+    return {
+      state: gutterWithoutFullRows,
+      action: {
+        type: REMOVED_ROWS,
+        payload: removedRowsCount
+      }
+    };
+  }else if(didHitTop(coordinates)){
+    return {
+      state: gutter,
+      action: {
+        type: HIT_TOP
+      }
     }
-  };
+  }else {
+    return {
+      state: gutterWithShape,
+      action: {}
+    };
+  }
 };
 
-export const determineIfCollision = (gutter, coordList) => {
-  return false;
+export const removeCompleteRows = (gutter) => {
+  return gutter.filter(row => row.find(b => b === NOT_COLORED_BLOCK) !== undefined);
+};
+
+export const isCollision = (gutter, coordList) => {
+  return computeCollisionsForCoords(coordList, gutter) > NO_COLLISIONS;
+};
+
+export const bestFitCoordinates = (gutter, shape) => {
+  let possibleCoordinates = computeShapeCoords(shape.id, shape.location, shape.rotation, shape.shiftAmount);
+
+  while (isCollision(gutter, possibleCoordinates) && !didHitTop(possibleCoordinates)){
+    possibleCoordinates = possibleCoordinates.map(c => [c[X_IX],c[Y_IX]-1]);
+  }
+
+  return possibleCoordinates;
 };
 
 export const randomShape = () => {

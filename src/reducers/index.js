@@ -22,6 +22,7 @@ const gutter = (state = initialState.gutter, action) => {
 };
 
 const rootReducer = (state = initialState, action) => {
+  action.gutter = state.gutter;
   let newShapes = shapes(state.shapes, action);
   let newGutter = gutter(state.gutter, newShapes.action);
   let newResults = results(state.results, newGutter.action);

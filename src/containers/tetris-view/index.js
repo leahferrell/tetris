@@ -13,12 +13,15 @@ import PropTypes from "prop-types";
 const TetrisView = ({
     blocks, holdBlock, nextBlock,
     level, lines, score,
+    isComplete, isPaused,
     nextTick, onKeyDown
   }) => {
 
   useEffect(() => {
     let interval = setInterval(() => {
-      nextTick();
+      if(!isPaused && !isComplete) {
+        nextTick();
+      }
     }, TICK_DURATION);
     return () => clearInterval(interval);
   });
@@ -63,6 +66,8 @@ TetrisView.propTypes = {
   level: PropTypes.number.isRequired,
   lines: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  isComplete: PropTypes.bool.isRequired,
+  isPaused: PropTypes.bool.isRequired,
   nextTick: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func.isRequired
 };
@@ -73,7 +78,9 @@ const mapStateToProps = state => ({
   nextBlock: state.shapes.next,
   level: state.results.level,
   lines: state.results.rowsRemaining,
-  score: state.results.score
+  score: state.results.score,
+  isComplete: state.game.isComplete,
+  isPaused: state.game.isPaused
 });
 
 const mapDispatchToProps = (dispatch) => ({

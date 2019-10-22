@@ -19,7 +19,7 @@ export const MAX_SHAPE = 8;
 export const NO_COLLISIONS = 0;
 export const HORIZONTAL_COLLISION = 1;
 export const VERTICAL_COLLISION = 2;
-export const BOTH_COLLISIONS = 3;
+export const GUTTER_COLLISION = 4;
 export const SHAPES = [
   {
     bitmap: [

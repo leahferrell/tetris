@@ -1,4 +1,5 @@
-import {OUT_OF_ROWS} from "../../actions/game";
+import {HIT_TOP, OUT_OF_ROWS} from "../../actions/game";
+import {PAUSED} from "../../actions/keydown";
 
 export const initialState = {
   isPaused: false,
@@ -8,9 +9,26 @@ export const initialState = {
 
 const game = (state=initialState, action) => {
   switch(action.type){
+    case PAUSED:
+      return {
+        state: {
+          ...state,
+          isPaused: !state.isPaused
+        },
+        action: {}
+      };
     case OUT_OF_ROWS:
       return {
         state: {
+          ...state,
+          isComplete: true
+        },
+        action: {}
+      };
+    case HIT_TOP:
+      return {
+        state: {
+          ...state,
           isComplete: true
         },
         action: {}
