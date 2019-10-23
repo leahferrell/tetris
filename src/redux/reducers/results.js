@@ -1,5 +1,5 @@
 import {STARTING_LEVEL, STARTING_LINES, STARTING_SCORE, STARTING_TIME} from "../../config";
-import {REMOVED_ROWS, OUT_OF_ROWS} from "../../actions/game";
+import {REMOVED_ROWS, OUT_OF_ROWS} from "../actions/game";
 
 export const initialState = {
   highScore: STARTING_SCORE,

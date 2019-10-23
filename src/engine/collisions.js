@@ -1,16 +1,15 @@
-import {computeShapeCoords} from "../index";
-import {
-  GUTTER_COLLISION,
-  HORIZONTAL_COLLISION,
-  MAX_X,
-  MAX_Y,
-  MIN_X, MIN_Y,
-  NO_COLLISIONS,
-  NOT_COLORED_BLOCK,
-  VERTICAL_COLLISION,
-  X_IX,
-  Y_IX
-} from "../../config";
+import {NONE, X_IX, Y_IX} from "../config";
+import {BOTTOM_COLLISION, GUTTER_COLLISION, HORIZONTAL_COLLISION, NO_COLLISIONS} from "../config/collision-flags";
+import {MAX_X, MAX_Y, MIN_X, MIN_Y} from "../config/grid";
+import {computeShapeCoords} from "./shape";
+
+export const hasCollisionOfType = (collisionMask, ...collisionFlags) => {
+  return collisionFlags.findIndex(f => collisionMask & f) !== -1;
+};
+
+export const hasCollision = (gutter, coordList) => {
+  return computeCollisionsForCoords(coordList, gutter) > NO_COLLISIONS;
+};
 
 export const didHitBottom = (coords) => {
   return (coords.find(c => c[Y_IX] >= MAX_Y) !== undefined);
@@ -25,7 +24,7 @@ export const didHitSide = (coords) => {
 };
 
 export const didHitGutter = (coords, gutter) => {
-  return (coords.find(c => gutter[c[Y_IX]][c[X_IX]] !== NOT_COLORED_BLOCK) !== undefined);
+  return (coords.find(c => gutter[c[Y_IX]][c[X_IX]] !== NONE) !== undefined);
 };
 
 export const computeCollisions = (shape, gutter) => {
@@ -34,7 +33,7 @@ export const computeCollisions = (shape, gutter) => {
 };
 
 export const computeCollisionsForCoords = (coords, gutter) => {
-  let collisions = didHitBottom(coords) ? VERTICAL_COLLISION : NO_COLLISIONS;
+  let collisions = didHitBottom(coords) ? BOTTOM_COLLISION : NO_COLLISIONS;
   collisions += (didHitSide(coords) ? HORIZONTAL_COLLISION : NO_COLLISIONS);
   return (
     collisions > NO_COLLISIONS ?

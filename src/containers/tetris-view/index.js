@@ -4,11 +4,11 @@ import Grid from "../../components/grid";
 import connect from "react-redux/es/connect/connect";
 import ShapeWindow from "../../components/shape-window";
 import ResultWindow from "../../components/result-window";
-import {selectGrid} from "../../selectors";
-import {tick} from "../../actions/game";
+import {tick} from "../../redux/actions/game";
 import {TICK_DURATION} from "../../config";
-import {keydown} from "../../actions/keydown";
+import {keydown} from "../../redux/actions/keydown";
 import PropTypes from "prop-types";
+import {createGrid} from "../../engine/grid";
 
 const TetrisView = ({
     blocks, holdBlock, nextBlock,
@@ -73,7 +73,7 @@ TetrisView.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  blocks: selectGrid(state.shapes.current, state.gutter),
+  blocks: createGrid(state.shapes.current, state.gutter),
   holdBlock: state.shapes.hold,
   nextBlock: state.shapes.next,
   level: state.results.level,

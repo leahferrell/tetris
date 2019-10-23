@@ -1,8 +1,8 @@
 import React from 'react';
 import Block from "../block";
-import {SHAPES} from "../../config";
 import './index.css'
 import PropTypes from "prop-types";
+import {SHAPES} from "../../config/shapes";
 
 const Grid = ({blocks}) => (
     <div className="grid">

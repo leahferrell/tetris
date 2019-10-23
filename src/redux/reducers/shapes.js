@@ -1,18 +1,11 @@
-import {randomShape, rotateShape} from "../../util";
-import {
-  HORIZONTAL_COLLISION,
-  MAX_Y,
-  NO_COLLISIONS,
-  NONE,
-  STARTING_COORD,
-  STARTING_ROTATION,
-  TICK_INCREMENT,
-  X_IX,
-  Y_IX
-} from "../../config";
-import {computeCollisions} from "../../util/collisions";
-import {ADDED_TO_GUTTER, TICK_CYCLE} from "../../actions/game";
-import {HARD_DROPPED, MOVED_HORIZONTAL, ROTATED, SOFT_DROPPED, SWAPPED_HOLD} from "../../actions/keydown";
+import {randomShape} from "../../engine/shape";
+import {NONE, STARTING_ROTATION, TICK_INCREMENT, X_IX, Y_IX} from "../../config";
+import {computeCollisions} from "../../engine/collisions";
+import {ADDED_TO_GUTTER, TICK_CYCLE} from "../actions/game";
+import {HARD_DROPPED, MOVED_HORIZONTAL, ROTATED, SOFT_DROPPED, SWAPPED_HOLD} from "../actions/keydown";
+import {rotateShape} from "../../engine/transformations";
+import {HORIZONTAL_COLLISION, NO_COLLISIONS} from "../../config/collision-flags";
+import {MAX_Y, STARTING_COORD} from "../../config/grid";
 
 export const initialState = {
   hold: NONE,
