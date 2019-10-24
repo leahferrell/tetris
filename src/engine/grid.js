@@ -1,7 +1,6 @@
-import {NONE, X_IX, Y_IX} from "../config";
+import {GRID, NONE, X_IX, Y_IX} from "../config";
 import {HIT_TOP, REMOVED_ROWS} from "../redux/actions/game";
 import {didHitTop, hasCollision} from "./collisions";
-import {MAX_X, MAX_Y} from "../config/grid";
 import {computeShapeCoords} from "./shape";
 import {shift} from "./transformations";
 
@@ -27,7 +26,7 @@ export const fitShapeToGutter = (gutter, shape) => {
   let coordinates = bestFitCoordinates(gutter, shape);
   let gutterWithShape = addShapeToGutter(gutter, coordinates, shape.id);
   let gutterWithoutFullRows = removeCompleteRows(gutterWithShape);
-  let removedRowsCount = MAX_Y - gutterWithoutFullRows.length;
+  let removedRowsCount = GRID.MAX_Y - gutterWithoutFullRows.length;
 
   if(removedRowsCount > NONE){
     return {
@@ -60,7 +59,7 @@ export const padGutter = (gutter, numRows) => {
 };
 
 export const createBlankRows = (rows) => {
-  return (Array.from(Array(rows), _ => Array(MAX_X).fill(NONE)));
+  return (Array.from(Array(rows), _ => Array(GRID.MAX_X).fill(NONE)));
 };
 
 export const removeCompleteRows = (gutter) => {

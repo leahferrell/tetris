@@ -1,12 +1,12 @@
-import {STARTING_LEVEL, STARTING_LINES, STARTING_SCORE, STARTING_TIME} from "../../config";
-import {REMOVED_ROWS, OUT_OF_ROWS} from "../actions/game";
+import {INIT_RESULTS} from "../../config";
+import {OUT_OF_ROWS, REMOVED_ROWS} from "../actions/game";
 
 export const initialState = {
-  highScore: STARTING_SCORE,
-  score: STARTING_SCORE,
-  time: STARTING_TIME,
-  rowsRemaining: STARTING_LINES,
-  level: STARTING_LEVEL
+  highScore: INIT_RESULTS.SCORE,
+  score: INIT_RESULTS.SCORE,
+  time: INIT_RESULTS.TIME,
+  rowsRemaining: INIT_RESULTS.LINES,
+  level: INIT_RESULTS.LEVEL
 };
 
 const updateResults = (results, rowsRemoved) => {

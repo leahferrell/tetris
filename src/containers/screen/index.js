@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {keydown} from "../../redux/actions/keydown";
 import connect from "react-redux/es/connect/connect";
 import {TICK_DURATION} from "../../config";
-import {tick} from "../../redux/actions/game";
+import {TICK_CYCLE} from "../../redux/actions/game";
 import PauseView from "../pause-view";
 import './index.css';
 import FinishView from "../finish-view";
@@ -57,7 +57,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  nextTick: () => dispatch(tick()),
+  nextTick: () => dispatch({type: TICK_CYCLE}),
   onKeyDown: (k) => dispatch(keydown(k))
 });
 

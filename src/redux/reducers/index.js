@@ -3,11 +3,11 @@ import results, {initialState as resultState} from "./results";
 import game, {initialState as gameState} from "./game";
 import {ADDED_TO_GUTTER, RESTART} from "../actions/game";
 import {createBlankRows, fitShapeToGutter} from "../../engine/grid";
-import {MAX_Y} from "../../config/grid";
+import {GRID} from "../../config";
 
 export const initialState = {
   game: gameState,
-  gutter: createBlankRows(MAX_Y),
+  gutter: createBlankRows(GRID.MAX_Y),
   results: resultState,
   shapes: shapeState
 };

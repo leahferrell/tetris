@@ -1,6 +1,4 @@
-import {NONE, X_IX, Y_IX} from "../config";
-import {BOTTOM_COLLISION, GUTTER_COLLISION, HORIZONTAL_COLLISION, NO_COLLISIONS} from "../config/collision-flags";
-import {MAX_X, MAX_Y, MIN_X, MIN_Y} from "../config/grid";
+import {COLLISION_FLAGS, GRID, NONE, X_IX, Y_IX} from "../config";
 import {computeShapeCoords} from "./shape";
 
 export const hasCollisionOfType = (collisionMask, ...collisionFlags) => {
@@ -8,19 +6,19 @@ export const hasCollisionOfType = (collisionMask, ...collisionFlags) => {
 };
 
 export const hasCollision = (gutter, coordList) => {
-  return computeCollisionsForCoords(coordList, gutter) > NO_COLLISIONS;
+  return computeCollisionsForCoords(coordList, gutter) > COLLISION_FLAGS.NONE;
 };
 
 export const didHitBottom = (coords) => {
-  return (coords.find(c => c[Y_IX] >= MAX_Y) !== undefined);
+  return (coords.find(c => c[Y_IX] >= GRID.MAX_Y) !== undefined);
 };
 
 export const didHitTop = (coords) => {
-  return (coords.find(c => c[Y_IX] <= MIN_Y) !== undefined);
+  return (coords.find(c => c[Y_IX] <= GRID.MIN_Y) !== undefined);
 };
 
 export const didHitSide = (coords) => {
-  return (coords.find(c => c[X_IX] >= MAX_X || c[X_IX] < MIN_X) !== undefined);
+  return (coords.find(c => c[X_IX] >= GRID.MAX_X || c[X_IX] < GRID.MIN_X) !== undefined);
 };
 
 export const didHitGutter = (coords, gutter) => {
@@ -33,14 +31,14 @@ export const computeCollisions = (shape, gutter) => {
 };
 
 export const computeCollisionsForCoords = (coords, gutter) => {
-  let collisions = didHitBottom(coords) ? BOTTOM_COLLISION : NO_COLLISIONS;
-  collisions += (didHitSide(coords) ? HORIZONTAL_COLLISION : NO_COLLISIONS);
+  let collisions = didHitBottom(coords) ? COLLISION_FLAGS.BOTTOM : COLLISION_FLAGS.NONE;
+  collisions += (didHitSide(coords) ? COLLISION_FLAGS.HORIZONTAL : COLLISION_FLAGS.NONE);
   return (
-    collisions > NO_COLLISIONS ?
+    collisions > COLLISION_FLAGS.NONE ?
       collisions :
       (didHitGutter(coords,gutter) ?
-        GUTTER_COLLISION :
-        NO_COLLISIONS
+        COLLISION_FLAGS.GUTTER :
+        COLLISION_FLAGS.NONE
       )
   );
 };

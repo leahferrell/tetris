@@ -1,18 +1,16 @@
 import {randomShape} from "../../engine/shape";
-import {NONE, STARTING_ROTATION, TICK_INCREMENT, X_IX, Y_IX} from "../../config";
+import {COLLISION_FLAGS, GRID, NONE, STARTING_ROTATION, TICK_INCREMENT, X_IX, Y_IX} from "../../config";
 import {computeCollisions} from "../../engine/collisions";
 import {ADDED_TO_GUTTER, TICK_CYCLE} from "../actions/game";
 import {HARD_DROPPED, MOVED_HORIZONTAL, ROTATED, SOFT_DROPPED, SWAPPED_HOLD} from "../actions/keydown";
 import {rotateShape} from "../../engine/transformations";
-import {HORIZONTAL_COLLISION, NO_COLLISIONS} from "../../config/collision-flags";
-import {MAX_Y, STARTING_COORD} from "../../config/grid";
 
 export const initialState = {
   hold: NONE,
   next: randomShape(),
   current: {
     id: NONE,
-    location: STARTING_COORD,
+    location: GRID.STARTING_COORD,
     shiftAmount: NONE,
     rotation: STARTING_ROTATION
   }
@@ -62,9 +60,9 @@ const moved = (state, gutter, transformation) => {
 
   let collisions = computeCollisions(transformedShape, gutter);
 
-  if(collisions === HORIZONTAL_COLLISION){
+  if(collisions === COLLISION_FLAGS.HORIZONTAL){
     return {state, action: {}};
-  }else if(collisions !== NO_COLLISIONS){
+  }else if(collisions !== COLLISION_FLAGS.NONE){
     return {
       state: next(state),
       action: {
@@ -96,7 +94,7 @@ const shapes = (state = initialState, action) => {
         state: next(state),
         action: {
           type: ADDED_TO_GUTTER,
-          payload: translate(state.current, NONE, MAX_Y)
+          payload: translate(state.current, NONE, GRID.MAX_Y)
         }
       };
     case MOVED_HORIZONTAL:
