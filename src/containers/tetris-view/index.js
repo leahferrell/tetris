@@ -1,55 +1,35 @@
-import React, {useEffect} from "react";
+import React from "react";
 import './index.css';
 import Grid from "../../components/grid";
 import connect from "react-redux/es/connect/connect";
 import ShapeWindow from "../../components/shape-window";
 import ResultWindow from "../../components/result-window";
-import {tick} from "../../redux/actions/game";
-import {TICK_DURATION} from "../../config";
-import {keydown} from "../../redux/actions/keydown";
 import PropTypes from "prop-types";
 import {createGrid} from "../../engine/grid";
 
 const TetrisView = ({
     blocks, holdBlock, nextBlock,
-    level, lines, score,
-    isComplete, isPaused,
-    nextTick, onKeyDown
+    level, lines, score
   }) => {
 
-  useEffect(() => {
-    let interval = setInterval(() => {
-      if(!isPaused && !isComplete) {
-        nextTick();
-      }
-    }, TICK_DURATION);
-    return () => clearInterval(interval);
-  });
-
   return (
-    <div
-      className="screen-background"
-      onKeyDown={(e) => onKeyDown(e.key)}
-      tabIndex="0"
-    >
-      <div className="game-board">
-        <Grid blocks={blocks}/>
-        <div className="right-window">
-          <ShapeWindow block={holdBlock}/>
-          <ShapeWindow block={nextBlock}/>
-          <ResultWindow
-            name="Level"
-            value={level}
-          />
-          <ResultWindow
-            name="Lines"
-            value={lines}
-          />
-          <ResultWindow
-            name="Score"
-            value={score}
-          />
-        </div>
+    <div className="game-board">
+      <Grid blocks={blocks}/>
+      <div className="right-window">
+        <ShapeWindow block={holdBlock}/>
+        <ShapeWindow block={nextBlock}/>
+        <ResultWindow
+          name="Level"
+          value={level}
+        />
+        <ResultWindow
+          name="Lines"
+          value={lines}
+        />
+        <ResultWindow
+          name="Score"
+          value={score}
+        />
       </div>
     </div>
   );
@@ -65,11 +45,7 @@ TetrisView.propTypes = {
   nextBlock: PropTypes.number.isRequired,
   level: PropTypes.number.isRequired,
   lines: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired,
-  isComplete: PropTypes.bool.isRequired,
-  isPaused: PropTypes.bool.isRequired,
-  nextTick: PropTypes.func.isRequired,
-  onKeyDown: PropTypes.func.isRequired
+  score: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -78,17 +54,9 @@ const mapStateToProps = state => ({
   nextBlock: state.shapes.next,
   level: state.results.level,
   lines: state.results.rowsRemaining,
-  score: state.results.score,
-  isComplete: state.game.isComplete,
-  isPaused: state.game.isPaused
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  nextTick: () => dispatch(tick()),
-  onKeyDown: (k) => dispatch(keydown(k))
+  score: state.results.score
 });
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(TetrisView);

@@ -1,7 +1,7 @@
 import shapes, {initialState as shapeState} from "./shapes";
 import results, {initialState as resultState} from "./results";
 import game, {initialState as gameState} from "./game";
-import {ADDED_TO_GUTTER} from "../actions/game";
+import {ADDED_TO_GUTTER, RESTART} from "../actions/game";
 import {createBlankRows, fitShapeToGutter} from "../../engine/grid";
 import {MAX_Y} from "../../config/grid";
 
@@ -21,7 +21,7 @@ const gutter = (state = initialState.gutter, action) => {
   }
 };
 
-const updateLoopReducer = (state = initialState, action) => {
+const gameLoop = (state, action) => {
   action.gutter = state.gutter;
   let newShapes = shapes(state.shapes, action);
   let newGutter = gutter(state.gutter, newShapes.action);
@@ -34,6 +34,15 @@ const updateLoopReducer = (state = initialState, action) => {
     results: newResults.state,
     game: newGame.state
   };
+};
+
+const updateLoopReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case RESTART:
+      return initialState;
+    default:
+      return gameLoop(state, action);
+  }
 };
 
 export default updateLoopReducer;

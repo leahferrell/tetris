@@ -1,0 +1,55 @@
+.start-view {
+    width: 400px;
+    height: 490px;
+    background-color: #181818;
+    position: absolute;
+    display: block;
+    margin: 10px auto;
+    right: 0;
+    left: 0;
+    color: #eeeeee;
+    padding: 20px;
+    text-align: center;
+}
+.controls {
+    margin: 40px 25px 32px 25px;
+}
+.controls-table {
+    width: 100%;
+}
+td, tr, table {
+    border-collapse: collapse;
+    border: 1px solid #eee;
+}
+td {
+    text-align: left;
+    padding: 10px;
+}
+tr {
+    margin: 20px;
+}
+td:first-child {
+    text-align: right;
+    font-weight: bold;
+}
+.start-button {
+    font-size: 18px;
+    background: #eee;
+    padding: 10px 30px;
+    color: #181818;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.start-button:hover, .start-button:active {
+    background: transparent;
+    border: 3px solid #eee;
+    color: #eee;
+    padding: 8px 28px;
+}
+
+.start-button:focus {
+    outline: none;
+}

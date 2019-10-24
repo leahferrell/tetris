@@ -2,8 +2,7 @@ import {HIT_TOP, OUT_OF_ROWS} from "../actions/game";
 import {PAUSED} from "../actions/keydown";
 
 export const initialState = {
-  isPaused: false,
-  isStarted: false,
+  isPaused: true,
   isComplete: false
 };
 
