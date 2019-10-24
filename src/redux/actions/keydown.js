@@ -1,3 +1,5 @@
+import {HARD_DROPPED, IGNORED, MOVED_HORIZONTAL, PAUSED, ROTATED, SOFT_DROPPED, SWAPPED_HOLD} from "./index";
+
 export const ARROW_DOWN = 'ArrowDown';
 export const ARROW_UP = 'ArrowUp';
 export const ARROW_LEFT = 'ArrowLeft';
@@ -10,14 +12,6 @@ export const LC_C = 'c';
 export const UC_C = 'C';
 export const LC_P = 'p';
 export const UC_P = 'P';
-
-export const PAUSED = 'PAUSED';
-export const ROTATED = 'ROTATED';
-export const SWAPPED_HOLD = 'SWAPPED_HOLD';
-export const HARD_DROPPED = 'HARD_DROPPED';
-export const MOVED_HORIZONTAL = 'MOVED_HORIZONTAL';
-export const SOFT_DROPPED = 'SOFT_DROPPED';
-export const IGNORED = 'IGNORED';
 
 export function keydown(key) {
   switch (key) {

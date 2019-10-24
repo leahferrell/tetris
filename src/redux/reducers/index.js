@@ -1,7 +1,7 @@
 import shapes, {initialState as shapeState} from "./shapes";
 import results, {initialState as resultState} from "./results";
 import game, {initialState as gameState} from "./game";
-import {ADDED_TO_GUTTER, RESTART} from "../actions/game";
+import {ADDED_TO_GUTTER, RESTART} from "../actions";
 import {createBlankRows, fitShapeToGutter} from "../../engine/grid";
 import {GRID} from "../../config";
 

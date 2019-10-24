@@ -1,5 +1,5 @@
 import {INIT_RESULTS} from "../../config";
-import {OUT_OF_ROWS, REMOVED_ROWS} from "../actions/game";
+import {OUT_OF_ROWS, REMOVED_ROWS} from "../actions";
 
 export const initialState = {
   highScore: INIT_RESULTS.SCORE,

@@ -2,7 +2,7 @@ import React from "react";
 import './index.css';
 import connect from "react-redux/es/connect/connect";
 import PropTypes from "prop-types";
-import {RESTART} from "../../redux/actions/game";
+import {RESTART} from "../../redux/actions";
 
 const FinishView = ({
   score, time, level, startOver

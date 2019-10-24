@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {keydown} from "../../redux/actions/keydown";
 import connect from "react-redux/es/connect/connect";
 import {TICK_DURATION} from "../../config";
-import {TICK_CYCLE} from "../../redux/actions/game";
+import {TICK_CYCLE} from "../../redux/actions";
 import PauseView from "../pause-view";
 import './index.css';
 import FinishView from "../finish-view";

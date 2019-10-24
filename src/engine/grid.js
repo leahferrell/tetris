@@ -1,5 +1,5 @@
 import {GRID, NONE, X_IX, Y_IX} from "../config";
-import {HIT_TOP, REMOVED_ROWS} from "../redux/actions/game";
+import {HIT_TOP, REMOVED_ROWS} from "../redux/actions";
 import {didHitTop, hasCollision} from "./collisions";
 import {computeShapeCoords} from "./shape";
 import {shift} from "./transformations";

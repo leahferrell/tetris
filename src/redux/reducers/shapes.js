@@ -1,8 +1,15 @@
 import {randomShape} from "../../engine/shape";
 import {COLLISION_FLAGS, GRID, NONE, STARTING_ROTATION, TICK_INCREMENT, X_IX, Y_IX} from "../../config";
 import {computeCollisions} from "../../engine/collisions";
-import {ADDED_TO_GUTTER, TICK_CYCLE} from "../actions/game";
-import {HARD_DROPPED, MOVED_HORIZONTAL, ROTATED, SOFT_DROPPED, SWAPPED_HOLD} from "../actions/keydown";
+import {
+  ADDED_TO_GUTTER,
+  HARD_DROPPED,
+  MOVED_HORIZONTAL,
+  ROTATED,
+  SOFT_DROPPED,
+  SWAPPED_HOLD,
+  TICK_CYCLE
+} from "../actions";
 import {rotateShape} from "../../engine/transformations";
 
 export const initialState = {
