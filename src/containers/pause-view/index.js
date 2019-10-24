@@ -1,6 +1,6 @@
 import React from "react";
 import './index.css';
-import {PAUSED} from "../../redux/actions/keydown";
+import {PAUSED} from "../../redux/actions";
 import connect from "react-redux/es/connect/connect";
 
 const PauseView = ({start}) => {
